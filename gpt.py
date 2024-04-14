@@ -94,8 +94,9 @@ class GPT(nn.Module):
     
     @property
     def num_parameters(self):
-        params = sum(p.numel() for p in self.model.parameters())/1e6
-        return f"{params}, 'M parameters'"
+        # Calculate the total number of parameters in all components of the GPT model
+        params = sum(p.numel() for p in self.parameters()) / 1e6  # use self.parameters()
+        return f"{params:.2f}M parameters"  # Formatted to show up to two decimal places
 
     def forward(self,x):
         bsz, seq_len = x.shape
