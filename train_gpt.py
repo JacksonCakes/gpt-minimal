@@ -13,6 +13,15 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 with open('input.txt', 'r', encoding='utf-8') as f:
     text = f.read()
 
+def save_model(model,optimizer,params,args,out_dir="./"):
+    checkpoint = {
+                    'model': model.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    'model_args': args,
+                    "num_params": params
+                }
+    print(f"saving checkpoint to {out_dir}")
+    torch.save(checkpoint, os.path.join(out_dir, 'ckpt.pt'))
 def main(args):
     tokenizer = get_tokenizer("basic_english") # split sentence by space
     # tokenize the text
@@ -55,7 +64,7 @@ def main(args):
         eval_iters = args.eval_iters,
         vocab = vocab
     )
-
+    save_model(model,optimizer,model.num_parameters(),args)
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--num_layer", type=int,default=2)
