@@ -93,7 +93,7 @@ class GPT(nn.Module):
         self.lm_head = nn.Linear(num_embeddings, vocab_size)
     
     @property
-    def num_parameters():
+    def num_parameters(self):
         params = sum(p.numel() for p in self.model.parameters())/1e6
         return f"{params}, 'M parameters'"
 
