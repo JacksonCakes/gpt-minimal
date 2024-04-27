@@ -6,7 +6,7 @@ class CausalLMDataset(Dataset):
         self.block_size = block_size
 
     def __len__(self):
-        return len(self.text) - self.block_size
+        return max(len(self.text) - self.block_size,1)
 
     def __getitem__(self, idx):
         "perform input shifting to get labels"
